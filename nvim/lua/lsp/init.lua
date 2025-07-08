@@ -23,7 +23,7 @@ function M.make_config()
             vim.keymap.set("n", "<C-j>", function() vim.diagnostic.jump { count = 1, float = false } end)
 
             -- diagnostics list
-            vim.keymap.set("n", "<leader>x", function()
+            vim.keymap.set("n", "<Space>x", function()
                 vim.diagnostic.setqflist { severity = vim.diagnostic.severity.ERROR }
             end)
 
