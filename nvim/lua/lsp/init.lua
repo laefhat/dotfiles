@@ -34,9 +34,10 @@ vim.lsp.config("*", {
 })
 
 -- load config for servers
-require"lsp.clangd"
-require"lsp.pyright"
-require"lsp.tsserver"
+require("lsp.clangd")
+require("lsp.luals")
+require("lsp.pyright")
+require("lsp.tsserver")
 
 -- can be disabled by `:lua vim.lsp.enable("tsserver", false)` for example
-vim.lsp.enable { "clangd", "pyright", "tsserver" }
+vim.lsp.enable({ "clangd", "luals", "pyright", "tsserver" })
