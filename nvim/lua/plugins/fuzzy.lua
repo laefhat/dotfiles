@@ -22,4 +22,5 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.keymap.set("n", "<Space>f", vim.cmd.Files)
 vim.keymap.set("n", "<Space>F", [[:let @+=expand('<cword>') \| Files<CR>]])
+vim.keymap.set("n", "<Space>b", vim.cmd.Buffers)
 vim.keymap.set("n", "<Space>u", vim.cmd.UndotreeToggle)
