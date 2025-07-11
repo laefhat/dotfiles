@@ -177,3 +177,14 @@ vim.api.nvim_create_user_command("MvnTest", function(opts)
 
     vim.cmd("execute '!" .. table.concat(cmd, " ") .. "'")
 end, { nargs = "?" })
+
+-- maven project makeprg
+if vim.fn.filereadable(vim.fn.getcwd() .. "/pom.xml") > 0 then
+    vim.opt_local.makeprg = "mvn clean install -am -pl"
+    vim.cmd([[
+    setlocal errorformat=%E%f:%l:%c:\ %m
+    setlocal errorformat+=%E%f:%l:\ %m
+    setlocal errorformat+=%E[%tRROR]\ %f:%l:%c:\ %m
+    setlocal errorformat+=%E[%tRROR]\ %f:%l:\ %m
+    ]])
+end
