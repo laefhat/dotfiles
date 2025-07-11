@@ -20,6 +20,7 @@ HISTSIZE=10000
 # use 256 color term
 export TERM=tmux-256color
 export COLORTERM=truecolor
+export WINIT_HIDPI_FACTOR=2
 # fzf options
 export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git'"
 export FZF_DEFAULT_OPTS='

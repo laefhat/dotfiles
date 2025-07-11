@@ -20,7 +20,6 @@ function linking() {
   mkdir -p ~/.local/bin
   mkdir -p ~/personal
   mkdir -p ~/repos
-  mkdir -p ~/opensource
   touch ~/.profile
 }
 echo '[-] linking dotfiles [-]'
@@ -58,12 +57,10 @@ else
 
   ln -sfn $(pwd)/.Xresources ~/.Xresources
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
-    echo '[-] enabling rpm fusion repositories [-]'
-    sudo dnf install -y \
-      https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    sudo dnf install -y \
-      https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
+    echo '[-] enabling rpm fusion repositories [-]'
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     echo '[-] installing steam essential packages [-]'
     sudo dnf install -y steam rocm-smi mangohud gamescope
     echo 'remember to add `mangohud %command%` to steam launch options'
@@ -79,7 +76,7 @@ else
     fc-cache -f -v
   fi
 
-  target_dir=~/opensource/elementary-xfce
+  target_dir=$XDG_DATA_HOME/elementary-xfce
   if [ ! -d "$target_dir" ] ; then
     echo '[-] building elementary icons for xfce [-]'
     sudo dnf install -y gcc gdk-pixbuf2-devel gtk-update-icon-cache make optipng pkgconf rsvg-pixbuf-loader
@@ -91,7 +88,7 @@ else
     sudo make icon-caches
   fi
 
-  target_dir=~/opensource/ibus-bamboo
+  target_dir=$XDG_DATA_HOME/ibus-bamboo
   if [ ! -d "$target_dir" ] ; then
     echo '[-] building ibus-bamboo [-]'
     sudo dnf install -y ibus make go libX11-devel libXtst-devel gtk3-devel
@@ -112,11 +109,7 @@ if [ ! -d "$target_dir" ] ; then
   git clone https://github.com/zsh-users/zsh-autosuggestions $target_dir
 fi
 
-echo '[-] downloading vim-plug [-]'
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-target_dir=~/opensource/neovim
+target_dir=$XDG_DATA_HOME/neovim
 if [ ! -d "$target_dir" ] ; then
   echo '[-] building neovim [-]'
   git clone https://github.com/neovim/neovim.git $target_dir

@@ -2,8 +2,6 @@
 " you can find a list of commands here: https://jb.gg/h38q75
 " find more examples here: https://jb.gg/share-ideavimrc
 source ~/.vimrc
-set cursorline
-set scrolloff=2
 " dismiss highlights
 nnoremap <silent> <Esc> :noh<CR>
 " find and replace
