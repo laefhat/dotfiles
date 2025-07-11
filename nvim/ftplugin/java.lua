@@ -129,3 +129,51 @@ config.init_options = {
 -- this starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require("jdtls").start_or_attach(config)
+
+-- run maven test
+vim.api.nvim_create_user_command("MvnTest", function(opts)
+    local file = vim.fn.expand("%:p")
+    local module = file:match("(.-)/src/test/java/")
+    local class = vim.fn.expand("%:t:r")
+
+    -- getting the package name of the class
+    local package_name = nil
+    for line in io.lines(file) do
+        package_name = line:match("^%s*package%s+([%w%.]+)%s*;")
+        if package_name then
+            break
+        end
+    end
+
+    -- getting the package fully-qualified class name
+    local fqcn = class
+    if not package_name then
+        vim.notify("could not determine package name", vim.log.levels.WARN)
+    else
+        fqcn = package_name .. "." .. class
+    end
+
+    -- run specific test method
+    if opts and opts.args ~= "" then
+        fqcn = fqcn .. "\\#" .. opts.args
+    end
+
+    local cmd = { "mvn test -T 2 -DskipTests=false -DfailIfNoTests=false" }
+    table.insert(cmd, "-Dlogback.configurationFile=" .. vim.fn.getcwd() .. "/logback-dev.xml")
+    local props = nil
+    if module then
+        table.insert(cmd, "-pl :" .. module:match("([^/]+)$"))
+        table.insert(cmd, "-Dtest=" .. fqcn)
+        props = module .. "/configuration.properties"
+        if vim.fn.filereadable(props) > 0 then
+            table.insert(cmd, "-Dic.configurationFile=" .. props)
+        else
+            props = nil
+        end
+    end
+    if not props then
+        table.insert(cmd, "-Dic.configurationFile=" .. vim.fn.getcwd() .. "/configuration.properties")
+    end
+
+    vim.cmd("execute '!" .. table.concat(cmd, " ") .. "'")
+end, { nargs = "?" })
