@@ -16,8 +16,6 @@ set incsearch  " show matches when typing
 set hlsearch  " highlight all matches
 set wildmenu  " enable auto completion menu after pressing tab.
 set history=10000  " max history
-set number  " precede each line with its line number
-set relativenumber  " show the line number relative to the line with the cursor in front of each line
 set list  " enable list mode that set the characters for the invisibles
 set lcs=tab:>\ ,trail:-,nbsp:+  " set the characters for the invisibles
 let &showbreak='+++ '  " string to put at the start of lines that have been wrapped

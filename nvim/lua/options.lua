@@ -21,10 +21,6 @@ vim.opt.title = true
 vim.opt.visualbell = true
 -- additional character that form pairs
 vim.opt.matchpairs:append("<:>")
--- precede each line with its line number
-vim.opt.number = true
--- show the line number relative to the line with the cursor in front of each line
-vim.opt.relativenumber = true
 -- enable list mode that set the characters for the invisibles
 vim.opt.list = true
 -- string to put at the start of lines that have been wrapped
