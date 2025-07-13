@@ -66,6 +66,12 @@ else
     echo 'remember to add `mangohud %command%` to steam launch options'
   fi
 
+  echo '[-] installing docker rootless mode [-]'
+  sudo dnf install -y dnf-plugins-core
+  sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  dockerd-rootless-setuptool.sh install
+
   target_dir=$XDG_DATA_HOME/fonts
   if [ ! -d "$target_dir" ] ; then
     echo '[-] installing favourite font [-]'
