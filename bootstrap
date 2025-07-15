@@ -58,7 +58,8 @@ else
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
     echo '[-] installing amd essential packages [-]'
-    sudo dnf install -y rocm-smi
+    sudo dnf install -y rocm-smi flatpak
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   fi
 
   echo '[-] installing docker rootless mode [-]'
