@@ -51,19 +51,15 @@ else
 
   echo '[-] installing essential packages [-]'
   sudo dnf upgrade -y
-  sudo dnf install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build
+  sudo dnf install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build dconf dconf-editor
   sudo dnf install -y alacritty watch ncdu autoconf automake parallel make pkg-config flex bison check meson
-  sudo dnf install -y tree vim tmux fzf ripgrep jq xclip htop redshift gnupg2 pdfgrep hyperfine procs
+  sudo dnf install -y tree vim tmux fzf ripgrep jq wl-clipboard htop gnupg2 pdfgrep hyperfine procs
 
   ln -sfn $(pwd)/.Xresources ~/.Xresources
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
-    echo '[-] enabling rpm fusion repositories [-]'
-    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    echo '[-] installing steam essential packages [-]'
-    sudo dnf install -y steam rocm-smi mangohud gamescope
-    echo 'remember to add `mangohud %command%` to steam launch options'
+    echo '[-] installing amd essential packages [-]'
+    sudo dnf install -y rocm-smi
   fi
 
   echo '[-] installing docker rootless mode [-]'
@@ -82,18 +78,6 @@ else
     fc-cache -f -v
   fi
 
-  target_dir=$XDG_DATA_HOME/elementary-xfce
-  if [ ! -d "$target_dir" ] ; then
-    echo '[-] building elementary icons for xfce [-]'
-    sudo dnf install -y gcc gdk-pixbuf2-devel gtk-update-icon-cache make optipng pkgconf rsvg-pixbuf-loader
-    git clone https://github.com/shimmerproject/elementary-xfce $target_dir
-    cd $target_dir
-    ./configure
-    make
-    sudo make install
-    sudo make icon-caches
-  fi
-
   target_dir=$XDG_DATA_HOME/ibus-bamboo
   if [ ! -d "$target_dir" ] ; then
     echo '[-] building ibus-bamboo [-]'
@@ -101,6 +85,7 @@ else
     git clone https://github.com/BambooEngine/ibus-bamboo.git $target_dir
     cd $target_dir
     sudo make install PREFIX=/usr
+    env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
   fi
 fi
 
