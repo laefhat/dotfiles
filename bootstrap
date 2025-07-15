@@ -55,7 +55,6 @@ else
   sudo dnf install -y alacritty watch ncdu autoconf automake parallel make pkg-config flex bison check meson
   sudo dnf install -y tree vim tmux fzf ripgrep jq wl-clipboard htop gnupg2 pdfgrep hyperfine procs
 
-  ln -sfn $(pwd)/.Xresources ~/.Xresources
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
     echo '[-] installing amd essential packages [-]'
