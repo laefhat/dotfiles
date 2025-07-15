@@ -6,11 +6,14 @@ vim.opt_local.expandtab = true
 local jdtls = os.getenv("XDG_DATA_HOME") .. "/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository"
 local workspace_dir = os.getenv("XDG_CACHE_HOME") .. "/eclipse.jdt.ls/workspace/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local config = require("lsp").make_config()
+local jdk_21 = vim.fn.glob(os.getenv("HOME") .. "/.sdkman/candidates/java/21.*-amzn", true)
+local jdk_17 = vim.fn.glob(os.getenv("HOME") .. "/.sdkman/candidates/java/17.*-amzn", true)
+local jdk_11 = vim.fn.glob(os.getenv("HOME") .. "/.sdkman/candidates/java/11.*-amzn", true)
 
 -- the command that starts the language server
 -- see: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 config.cmd = {
-    os.getenv("JAVASE_21") .. "/bin/java",
+    jdk_21 .. "/bin/java",
     "-Declipse.application=org.eclipse.jdt.ls.core.id1",
     "-Dosgi.bundles.defaultStartLevel=4",
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -81,16 +84,16 @@ config.settings = {
             runtimes = {
                 {
                     name = "JavaSE-11",
-                    path = os.getenv("JAVASE_11"),
-                    default = true
+                    path = jdk_11,
+                    default = true,
                 },
                 {
                     name = "JavaSE-17",
-                    path = os.getenv("JAVASE_17"),
+                    path = jdk_17,
                 },
                 {
                     name = "JavaSE-21",
-                    path = os.getenv("JAVASE_21"),
+                    path = jdk_21,
                 },
             }
         }

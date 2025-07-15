@@ -15,6 +15,8 @@ vim.opt.splitright = true
 vim.opt.updatetime = 100
 -- enable undo history
 vim.opt.undofile = true
+-- highlight the text line of the cursor
+vim.opt.cursorline = true
 -- set the window title
 vim.opt.title = true
 -- use visual bell instead of beeping
@@ -31,3 +33,9 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftround = true
+-- disable vim providers
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0

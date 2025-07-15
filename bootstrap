@@ -41,7 +41,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew update
   brew install curl wget git coreutils watch ncdu cmake ninja tree
   brew install parallel tmux fzf ripgrep jq golang htop pdfgrep hyperfine procs
-  brew install alacritty maccy universal-ctags font-hack-nerd-font
+  brew install alacritty maccy universal-ctags font-hack
 else
   echo '[-] checking secure boot state [-]'
   if [[ "$(mokutil --sb-state)" != *"SecureBoot enabled"* ]]; then
@@ -75,10 +75,10 @@ else
   target_dir=$XDG_DATA_HOME/fonts
   if [ ! -d "$target_dir" ] ; then
     echo '[-] installing favourite font [-]'
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.zip
+    wget https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip
     mkdir -p $target_dir
-    unzip Hack.zip -d $target_dir
-    rm -f Hack.zip
+    unzip Hack-v3.003-ttf.zip -d $target_dir
+    rm -f Hack-v3.003-ttf.zip
     fc-cache -f -v
   fi
 

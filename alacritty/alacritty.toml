@@ -9,15 +9,15 @@ dynamic_title = true
 option_as_alt = "Both"
 
 [font]
-normal.family = "Hack Nerd Font"
+normal.family = "Hack"
 normal.style = "Regular"
-bold.family = "Hack Nerd Font"
+bold.family = "Hack"
 bold.style = "Bold"
-italic.family = "Hack Nerd Font"
+italic.family = "Hack"
 italic.style = "Italic"
-bold_italic.family = "Hack Nerd Font"
+bold_italic.family = "Hack"
 bold_italic.style = "Bold Italic"
-size = 18
+size = 16
 
 [selection]
 save_to_clipboard = true
