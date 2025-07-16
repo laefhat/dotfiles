@@ -57,8 +57,11 @@ else
 
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
+    echo '[-] enabling rpm fusion repositories [-]'
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     echo '[-] installing amd essential packages [-]'
-    sudo dnf install -y rocm-smi flatpak
+    sudo dnf install -y rocm-smi mangohud gamescope flatpak steam
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   fi
 
