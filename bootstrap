@@ -47,12 +47,15 @@ else
     exit 1
   fi
 
-  echo '[-] configuring debian sources [-]'
-  sudo cp -f $(pwd)/etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
-  sudo apt update && sudo apt full-upgrade -y
-  sudo apt install -y apt-listchanges apt-listbugs
+  if [ ! -f '/etc/apt/sources.list.d/debian.sources' ]; then
+    echo '[-] configuring debian sources [-]'
+    sudo cp -f $(pwd)/etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
+    sudo apt update && sudo apt full-upgrade -y
+    sudo apt install -y apt-listchanges apt-listbugs
+  fi
 
   echo '[-] installing essential packages [-]'
+  sudo apt update && sudo apt upgrade -y
   sudo apt install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build dconf dconf-editor
   sudo apt install -y watch ncdu autoconf automake parallel make pkg-config flex bison check meson
   sudo apt install -y tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard htop gnupg2 pdfgrep hyperfine procs
