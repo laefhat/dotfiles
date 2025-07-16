@@ -17,6 +17,7 @@ vim.opt.updatetime = 100
 vim.opt.undofile = true
 -- highlight the text line of the cursor
 vim.opt.cursorline = true
+vim.api.nvim_set_hl(0, "CursorLine", { underline = true })
 -- all folds are open by default
 vim.opt.foldenable = false
 -- set the window title
@@ -29,6 +30,8 @@ vim.opt.matchpairs:append("<:>")
 vim.opt.list = true
 -- string to put at the start of lines that have been wrapped
 vim.opt.showbreak = "+++ "
+-- lines longer than the width of the window will not wrap
+vim.opt.wrap = false
 -- do not use 24-bit RGB color
 vim.opt.termguicolors = false
 vim.opt.background = "dark"

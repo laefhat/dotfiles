@@ -10,6 +10,7 @@ local jdk_21 = vim.fn.glob(os.getenv("HOME") .. "/.sdkman/candidates/java/21.*-a
 local jdk_17 = vim.fn.glob(os.getenv("HOME") .. "/.sdkman/candidates/java/17.*-amzn", true)
 local jdk_11 = vim.fn.glob(os.getenv("HOME") .. "/.sdkman/candidates/java/11.*-amzn", true)
 
+config.name = "jdtls"
 -- the command that starts the language server
 -- see: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
 config.cmd = {
@@ -27,7 +28,6 @@ config.cmd = {
     "-configuration", jdtls .. "/config_mac_arm",
     "-data", workspace_dir
 }
-config.name = "jdtls"
 -- root_dir = vim.fs.root(0, {".git", "mvnw", "gradlew"}),
 config.root_dir = vim.fn.getcwd()
 
