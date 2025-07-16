@@ -17,6 +17,8 @@ vim.opt.updatetime = 100
 vim.opt.undofile = true
 -- highlight the text line of the cursor
 vim.opt.cursorline = true
+-- all folds are open by default
+vim.opt.foldenable = false
 -- set the window title
 vim.opt.title = true
 -- use visual bell instead of beeping
@@ -27,6 +29,12 @@ vim.opt.matchpairs:append("<:>")
 vim.opt.list = true
 -- string to put at the start of lines that have been wrapped
 vim.opt.showbreak = "+++ "
+-- do not use 24-bit RGB color
+vim.opt.termguicolors = false
+vim.opt.background = "dark"
+vim.cmd.colorscheme("quiet")
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
 -- set default indentation
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2

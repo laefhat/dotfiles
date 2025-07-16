@@ -1,10 +1,10 @@
 /**
-* navigate to `about:config`, seach and convert `toolkit.legacyUserProfileCustomizations.stylesheets` to true
+* navigate to `about:config`, search and convert `toolkit.legacyUserProfileCustomizations.stylesheets` to true
 * then go to `about:profiles`, grab the default profile path
 * $ mkdir -p ~/<path_to_profile>/chrome
 * $ cp ~/dotfiles/templates/userChrome.css ~/<path_to_profile>/chrome/userChrome.css
 */
-.tab-text.tab-label{
+.tab-text.tab-label {
   font-size: 12px;
 }
 #tabbrowser-tabs .tab-context-line {
