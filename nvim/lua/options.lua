@@ -32,7 +32,6 @@ vim.opt.showbreak = "+++ "
 -- do not use 24-bit RGB color
 vim.opt.termguicolors = false
 vim.opt.background = "dark"
-vim.cmd.colorscheme("quiet")
 vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
 -- set default indentation
