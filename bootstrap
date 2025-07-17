@@ -51,6 +51,7 @@ else
   if [ ! -f '/etc/apt/sources.list.d/debian.sources' ]; then
     echo '[-] configuring debian sources [-]'
     sudo cp -f $(pwd)/etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
+    sudo cp -f $(pwd)/etc/apt/preferences.d/security /etc/apt/preferences.d/security
     sudo apt update -y
     sudo apt install -y apt-listchanges apt-listbugs
     sudo DEBIAN_FRONTEND=noninteractive apt full-upgrade -y
