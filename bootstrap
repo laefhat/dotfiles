@@ -11,6 +11,7 @@ function linking() {
 
   mkdir -p ${XDG_DATA_HOME:=~/.local/share}
   mkdir -p ${XDG_CONFIG_HOME:=~/.config}
+  ln -sfn $(pwd)/alacritty $XDG_CONFIG_HOME/alacritty
   ln -sfn $(pwd)/nvim $XDG_CONFIG_HOME/nvim
 
   ln -sfn $(pwd)/.gitignore ~/.gitignore
@@ -39,8 +40,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   echo '[-] installing essential packages [-]'
   brew update
   brew install curl wget git coreutils watch ncdu cmake ninja tree parallel tmux fzf
-  brew install ripgrep jq golang htop pdfgrep hyperfine procs maccy universal-ctags font-hack
-  brew install tmux-mem-cpu-load
+  brew install alacritty ripgrep jq golang htop pdfgrep procs universal-ctags font-hack maccy
 else
   echo '[-] checking secure boot state [-]'
   if [[ "$(mokutil --sb-state)" != *"SecureBoot enabled"* ]]; then
@@ -60,7 +60,7 @@ else
   sudo apt update -y && sudo apt upgrade -y
   sudo apt install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build ca-certificates
   sudo apt install -y watch ncdu autoconf automake parallel make pkg-config flex bison check meson
-  sudo apt install -y tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard htop gnupg2 pdfgrep hyperfine procs
+  sudo apt install -y alacritty tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard htop pdfgrep procs
 
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     echo '[-] installing amd essential packages [-]'
@@ -117,16 +117,8 @@ else
     git clone https://github.com/BambooEngine/ibus-bamboo.git $target_dir
     cd $target_dir
     sudo make install PREFIX=/usr
-    env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
-  fi
-
-  target_dir=$XDG_DATA_HOME/tmux-mem-cpu-load
-  if [ ! -d "$target_dir" ] ; then
-    echo '[-] building tmux-mem-cpu-load  [-]'
-    git clone https://github.com/thewtex/tmux-mem-cpu-load.git $target_dir
-    cd $target_dir
-    cmake . && make
-    sudo make install
+    env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && \
+      gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
   fi
 fi
 
