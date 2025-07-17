@@ -57,14 +57,28 @@ else
   echo '[-] installing essential packages [-]'
   sudo apt update && sudo apt upgrade -y
   sudo apt install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build dconf dconf-editor
-  sudo apt install -y watch ncdu autoconf automake parallel make pkg-config flex bison check meson
+  sudo apt install -y watch ncdu autoconf automake parallel make pkg-config flex bison check meson ca-certificates
   sudo apt install -y tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard htop gnupg2 pdfgrep hyperfine procs
 
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     echo '[-] installing amd essential packages [-]'
-    sudo dpkg --add-architecture i386
-    sudo apt install -y rocm-smi mangohud
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
+    sudo apt install -y rocm-smi gamemode gamescope flatpak gnome-software-plugin-flatpak
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  fi
+
+  if [ ! -f '/etc/apt/keyrings/docker.asc' ]; then
+    echo '[-] configuring docker rootless mode [-]'
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+    dockerd-rootless-setuptool.sh install
   fi
 
   target_dir=$XDG_DATA_HOME/fonts
