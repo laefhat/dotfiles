@@ -50,13 +50,13 @@ else
   if [ ! -f '/etc/apt/sources.list.d/debian.sources' ]; then
     echo '[-] configuring debian sources [-]'
     sudo cp -f $(pwd)/etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
-    sudo apt update
+    sudo apt update -y
     sudo apt install -y apt-listchanges apt-listbugs
-    sudo apt full-upgrade -y
+    sudo DEBIAN_FRONTEND=noninteractive apt full-upgrade -y
   fi
 
   echo '[-] installing essential packages [-]'
-  sudo apt update && sudo apt upgrade -y
+  sudo apt update -y && sudo apt upgrade -y
   sudo apt install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build ca-certificates
   sudo apt install -y watch ncdu autoconf automake parallel make pkg-config flex bison check meson
   sudo apt install -y tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard htop gnupg2 pdfgrep hyperfine procs
@@ -66,10 +66,10 @@ else
     ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
     sudo apt install -y rocm-smi gamemode gamescope flatpak gnome-software-plugin-flatpak
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak install flathub com.github.tchx84.Flatseal
+    flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
   fi
 
-  if [ ! -f '/etc/apt/keyrings/docker.asc' ]; then
+  if [ ! -f '/etc/apt/sources.list.d/docker.list' ]; then
     echo '[-] configuring docker rootless mode [-]'
     sudo install -m 0755 -d /etc/apt/keyrings
     sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
