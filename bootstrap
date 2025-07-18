@@ -68,6 +68,8 @@ else
     sudo apt-get install -y rocm-smi gamemode flatpak gnome-software-plugin-flatpak
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
+    echo '[-] run the following command to config mangohud, do not use `flatpak override` or flatseal [-]'
+    echo 'cp -f ~/dotfiles/templates/MangoHud.conf ~/.var/app/com.valvesoftware.Steam/.config/MangoHud/MangoHud.conf'
   fi
 
   echo '[-] configuring gnome wm keymaps [-]'
