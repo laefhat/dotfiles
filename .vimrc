@@ -19,6 +19,9 @@ set history=10000  " max history
 set list  " enable list mode that set the characters for the invisibles
 set lcs=tab:>\ ,trail:-,nbsp:+  " set the characters for the invisibles
 let &showbreak='+++ '  " string to put at the start of lines that have been wrapped
+" show the line number relative to the line with the cursor in front of each line
+set number
+set relativenumber
 " command mode navigation
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>

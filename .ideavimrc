@@ -12,7 +12,6 @@ vnoremap // "0y/\V<C-r>0<CR>
 " enable ideavim plugins https://jb.gg/ideavim-plugins
 set highlightedyank
 set commentary
-set surround
 " ide specific options
 set ideastatusicon=gray
 set ideawrite=file

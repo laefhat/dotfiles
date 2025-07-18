@@ -19,6 +19,9 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 -- all folds are open by default
 vim.opt.foldenable = false
+-- show the line number relative to the line with the cursor in front of each line
+vim.opt.number = true
+vim.opt.relativenumber = true
 -- set the window title
 vim.opt.title = true
 -- use visual bell instead of beeping
@@ -30,9 +33,9 @@ vim.opt.list = true
 -- string to put at the start of lines that have been wrapped
 vim.opt.showbreak = "+++ "
 -- set default indentation
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.shiftround = true
 -- disable vim providers
