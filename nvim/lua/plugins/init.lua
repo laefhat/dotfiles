@@ -6,7 +6,6 @@ vim.pack.add({
     { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
     { src = "https://github.com/junegunn/fzf" },
     { src = "https://github.com/junegunn/fzf.vim" },
-    { src = "https://github.com/mfussenegger/nvim-jdtls" },
 })
 
 -- plugin specific config
