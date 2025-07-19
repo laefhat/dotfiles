@@ -39,8 +39,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
   echo '[-] installing essential packages [-]'
   brew update
-  brew install curl wget git coreutils watch ncdu cmake ninja tree parallel tmux fzf
-  brew install alacritty ripgrep jq golang htop pdfgrep procs universal-ctags font-hack maccy
+  brew install curl wget git coreutils watch ncdu cmake ninja tree parallel
+  brew install alacritty ripgrep jq tmux fzf golang universal-ctags font-hack maccy
 else
   echo '[-] checking secure boot state [-]'
   if [[ "$(mokutil --sb-state)" != *"SecureBoot enabled"* ]]; then
@@ -60,8 +60,7 @@ else
   echo '[-] installing essential packages [-]'
   sudo apt-get update && sudo apt-get upgrade -y
   sudo apt-get install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build ca-certificates
-  sudo apt-get install -y watch ncdu autoconf automake parallel make pkg-config flex bison check meson
-  sudo apt-get install -y alacritty tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard htop pdfgrep procs
+  sudo apt-get install -y watch ncdu parallel alacritty tree vim tmux fzf ripgrep jq universal-ctags wl-clipboard
 
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     echo '[-] installing amd essential packages [-]'
@@ -138,7 +137,7 @@ if [ ! -d "$target_dir" ] ; then
   echo '[-] building neovim [-]'
   git clone https://github.com/neovim/neovim.git $target_dir
   cd $target_dir
-  # git checkout nightly
+  git checkout nightly
   make CMAKE_BUILD_TYPE=RelWithDebInfo
   sudo make install
 fi

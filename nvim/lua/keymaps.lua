@@ -7,7 +7,7 @@ vim.keymap.set("n", "<Space>e", ":e %:h<C-z>")
 vim.keymap.set("n", "<Space>b", ":b <C-z>")
 vim.keymap.set("v", "//", [["0y/\V<C-r>=escape(@0,'/\')<CR><CR>]])
 
--- program to use for the :grep command
+-- program to use ripgrep for the :grep command
 if vim.fn.executable("rg") then
     vim.opt.grepprg = "rg --vimgrep --smart-case --no-heading --column"
     vim.opt.grepformat:prepend("%f:%l:%c:%m")
@@ -28,6 +28,12 @@ vim.keymap.set("n", "<Space>P", [["+P]])
 vim.keymap.set("v", "<Space>y", [["+y]])
 vim.keymap.set("v", "<Space>p", [["+p]])
 
+-- move between windows
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
 -- clear highlights on search
 vim.keymap.set("n", "<Esc>", vim.cmd.nohlsearch, { silent = true })
 vim.keymap.set("n", "-", vim.cmd.Explore)
@@ -44,6 +50,6 @@ vim.keymap.set("n", "<Space>tg", function()
         vim.notify("no ctags installation found", vim.log.levels.WARN)
         return
     end
-    local job = vim.fn.jobstart { "ctags", "--tag-relative=never", "-G", "-R", "." }
+    local job = vim.fn.jobstart({ "ctags", "--tag-relative=never", "-G", "-R", "." })
     vim.notify("generate tags..., id: " .. job, vim.log.levels.INFO)
 end)

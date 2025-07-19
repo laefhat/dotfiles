@@ -19,13 +19,10 @@ set history=10000  " max history
 set list  " enable list mode that set the characters for the invisibles
 set lcs=tab:>\ ,trail:-,nbsp:+  " set the characters for the invisibles
 let &showbreak='+++ '  " string to put at the start of lines that have been wrapped
-" show the line number relative to the line with the cursor in front of each line
-set number
-set relativenumber
-" command mode navigation
-cnoremap <C-a> <home>
-cnoremap <C-e> <end>
-" basic grep
+" navigate within command mode like Emacs
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+" pattern grep
 nnoremap <Space>g :vimgrep //f **<S-Left><S-Left><Right>
 vnoremap <Space>g "0y:vimgrep /<C-r>=escape(@0,'/\')<CR>/f **<S-Left><Left><Left><Left>
 nnoremap <Space>G :vimgrep /<C-r><C-w>/f **
@@ -39,3 +36,8 @@ vnoremap <Space>y "+y
 nnoremap <Space>p "+p
 nnoremap <Space>P "+P
 vnoremap <Space>p "+p
+" move between windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
