@@ -14,6 +14,7 @@ set splitbelow
 set splitright
 set laststatus=0
 set ruler
+set showcmd
 set title
 set visualbell
 set ignorecase
@@ -49,6 +50,7 @@ Plug 'tpope/vim-surround'
 Plug 'mhinz/vim-signify'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'ziglang/zig.vim'
 call plug#end()
 
 " generate ctags in the background
@@ -103,6 +105,11 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" language specific config
+au FileType c,cpp,java,python setl ts=4 sts=4 sw=4 et
+au FileType javascript,typescript setl ts=2 sts=2 sw=2 et
+au FileType json setl ts=2 sts=2 sw=2 fp=jq et
 
 " fzf config
 let g:fzf_vim = {}
