@@ -12,7 +12,7 @@ set shiftround
 set showmatch
 set splitbelow
 set splitright
-set laststatus=0
+set laststatus=2
 set ruler
 set showcmd
 set title
@@ -108,6 +108,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " language specific config
+au FileType zig setl ts=4 sts=4 sw=4 fp=zig\ fmt\ --stdin et
 au FileType c,cpp,java,python setl ts=4 sts=4 sw=4 et
 au FileType javascript,typescript setl ts=2 sts=2 sw=2 et
 au FileType json setl ts=2 sts=2 sw=2 fp=jq et
@@ -117,6 +118,7 @@ let g:fzf_vim = {}
 let g:fzf_layout = { 'down': '41%' }
 let g:fzf_vim.preview_window = ['right,41%,<70(up,41%)']
 let g:highlightedyank_highlight_duration = 150
+let g:zig_fmt_autosave = 0
 nnoremap <Space>f <Cmd>Files<CR>
 nnoremap <Space>F :let @+=expand('<cword>') \| Files<CR>
 nnoremap <Space>b <Cmd>Buffers<CR>
@@ -124,4 +126,3 @@ nnoremap <Space>b <Cmd>Buffers<CR>
 " no background
 hi Normal ctermbg=NONE guibg=NONE
 hi NormalNC ctermbg=NONE guibg=NONE
-hi VertSplit cterm=NONE ctermbg=NONE guibg=NONE
