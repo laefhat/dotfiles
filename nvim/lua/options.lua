@@ -25,12 +25,6 @@ vim.opt.visualbell = true
 vim.opt.list = true
 -- string to put at the start of lines that have been wrapped
 vim.opt.showbreak = "+++ "
--- set default indentation
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.expandtab = true
-vim.opt.shiftround = true
 -- disable vim providers
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0

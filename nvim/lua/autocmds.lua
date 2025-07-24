@@ -2,7 +2,6 @@
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "help", "qf", "checkhealth", "fugitive", "fugitiveblame" },
     callback = function(e)
-        vim.opt.cursorline = true
         vim.keymap.set("n", "q", vim.cmd.quit, { buffer = 0 })
     end
 })
