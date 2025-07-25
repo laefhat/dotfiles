@@ -1,4 +1,3 @@
--- plugins definition
 vim.pack.add({
     { src = "https://github.com/tpope/vim-fugitive" },
     { src = "https://github.com/tpope/vim-surround" },
@@ -9,6 +8,5 @@ vim.pack.add({
     { src = "https://github.com/ziglang/zig.vim" },
 })
 
--- plugin specific config
-require("plugins.colors")
-require("plugins.fuzzy")
+require("laefhat.plugins.colors")
+require("laefhat.plugins.fuzzy")

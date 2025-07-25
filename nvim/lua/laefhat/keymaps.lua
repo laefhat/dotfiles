@@ -1,9 +1,7 @@
--- command mode navigation
 vim.keymap.set("c", "<C-a>", "<Home>")
 vim.keymap.set("c", "<C-e>", "<End>")
 vim.keymap.set("c", "<C-BS>", "<C-w>")
 
--- program to use for the :grep command
 if vim.fn.executable("rg") then
     vim.opt.grepprg = "rg --vimgrep --smart-case --no-heading --column"
     vim.opt.grepformat:prepend("%f:%l:%c:%m")
@@ -15,18 +13,13 @@ end
 vim.keymap.set("v", "//", [["0y/\V<C-r>=escape(@0,'/\')<CR><CR>]])
 vim.keymap.set("n", "<Space>e", ":e %:h<C-z>")
 
--- find and replace
 vim.keymap.set("n", "<Space>r", [[:%s/<C-r><C-w>//gI<Left><Left><Left>]])
 vim.keymap.set("v", "<Space>r", [["0y:%s/<C-r>=escape(@0,'/\')<CR>//gI<Left><Left><Left>]])
 
--- yank marked text/paste to/from global register
-vim.keymap.set("n", "<Space>yy", [["+yy]])
-vim.keymap.set("v", "<Space>y", [["+y]])
-vim.keymap.set("n", "<Space>p", [["+p]])
+vim.keymap.set({ "n","v" }, "<Space>y", [["+y]])
+vim.keymap.set({ "n","v" }, "<Space>p", [["+p]])
 vim.keymap.set("n", "<Space>P", [["+P]])
-vim.keymap.set("v", "<Space>p", [["+p]])
 
--- quick launch and dismiss netrw
 vim.keymap.set("n", "-", vim.cmd.Explore)
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "netrw",
@@ -35,7 +28,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
--- generate ctags in the background
 vim.keymap.set("n", "<Space>tg", function()
     if vim.fn.executable("ctags") < 1 then
         vim.notify("no ctags installation found", vim.log.levels.WARN)

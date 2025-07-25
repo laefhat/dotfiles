@@ -1,12 +1,14 @@
 " you can find a list of commands here: https://jb.gg/h38q75
 " find more examples here: https://jb.gg/share-ideavimrc
 source ~/.vimrc
-" find and replace
 nnoremap <Space>r viw"0y:%s/<C-r>0//gI<Left><Left><Left>
 vnoremap <Space>r "0y:%s/<C-r>0//gI<Left><Left><Left>
-" search current marked text in IntelliJ only
 vnoremap // "0y/\V<C-r>0<CR>
-" IDE specific options
+nnoremap <Space>yy "+yy
+vnoremap <Space>y "+y
+nnoremap <Space>p "+p
+nnoremap <Space>P "+P
+vnoremap <Space>p "+p
 set ideastatusicon=gray
 set ideawrite=file
 set visualdelay=50
@@ -17,7 +19,6 @@ set highlightedyank
 set commentary
 set surround
 " map IDE Actions to IdeaVim -- https://jb.gg/abva4t
-" find files and grep patterns
 nmap <Space>ff <Action>(GotoFile)
 nmap <Space>fw viw:action GotoFile<CR>
 nmap <Space>e <Action>(ShowNavBar)
@@ -26,7 +27,6 @@ nmap <Space>gg <Action>(FindInPath)
 vmap <Space>gg <Action>(FindInPath)
 nmap <Space>gw viw:action FindInPath<CR>
 nmap <Space>/ <Action>(SearchEverywhere)
-" intellisense actions
 nmap gq <Action>(ReformatCode)
 vmap gq <Action>(ReformatCode)
 nmap <C-]> <Action>(GotoDeclaration)
@@ -35,16 +35,9 @@ nmap gri <Action>(GotoImplementation)
 nmap grr <Action>(FindUsages)
 nmap K <Action>(ShowHoverInfo)
 nmap gra <Action>(GotoAction)
-" IDE actions
 nmap <Space>xc <Action>(RunClass)
 nmap <Space>xm <Action>(RunMenu)
 nmap - <Action>(SelectInProjectView)
 nmap ]d <Action>(GotoNextError)zz
 nmap [d <Action>(GotoPreviousError)zz
 nmap <C-w>o <Action>(HideAllWindows)
-" yank marked text/paste to/from global register
-nnoremap <Space>yy "+yy
-vnoremap <Space>y "+y
-nnoremap <Space>p "+p
-nnoremap <Space>P "+P
-vnoremap <Space>p "+p

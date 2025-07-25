@@ -1,0 +1,5 @@
+require("laefhat.options")
+require("laefhat.keymaps")
+require("laefhat.lsp")
+require("laefhat.autocmds")
+require("laefhat.plugins")

@@ -1,4 +1,3 @@
--- quick exit some filetypes
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "help", "qf", "checkhealth", "fugitive", "fugitiveblame" },
     callback = function(e)
@@ -6,7 +5,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
--- open the quickfix window whenever a quickfix command is executed
 vim.api.nvim_create_autocmd("QuickFixCmdPost", {
     pattern = "[^l]*",
     callback = function(e)
@@ -15,7 +13,6 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
     end
 })
 
--- highlight the yanked text during a TextYankPost event.
 vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
     callback = function(e)
