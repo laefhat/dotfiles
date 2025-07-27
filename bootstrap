@@ -49,68 +49,32 @@ else
     exit 1
   fi
 
-  if [ ! -f '/etc/apt/sources.list.d/debian.sources' ]; then
-    echo '[-] configuring debian sources [-]'
-    sudo cp -f $(pwd)/etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
-    sudo cp -f $(pwd)/etc/apt/preferences.d/security /etc/apt/preferences.d/security
-    sudo apt-get update
-    sudo apt-get install -y apt-listchanges apt-listbugs
-    sudo DEBIAN_FRONTEND=noninteractive apt-get full-upgrade -y
-  fi
-
   echo '[-] installing essential packages [-]'
-  sudo apt-get update -y && sudo apt-get upgrade -y
-  sudo apt-get install -y curl wget zip zsh git coreutils gcc clang clangd cmake make ninja-build tree ca-certificates
-  sudo apt-get install -y alacritty parallel watch ncdu vim tmux fzf ripgrep jq universal-ctags wl-clipboard
+  sudo dnf upgrade -y
+  sudo dnf install -y curl wget zip zsh git coreutils gcc clang cmake make ninja-build ncdu
+  sudo dnf install -y alacritty zig parallel watch tree vim tmux fzf ripgrep jq xclip redshift
 
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
-    echo '[-] installing amd essential packages [-]'
-    sudo apt-get install -y rocm-smi gamemode flatpak gnome-software-plugin-flatpak
-    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    flatpak install -y --noninteractive flathub com.github.tchx84.Flatseal
-    echo 'be sure to cp mangohud config to `.config/MangoHud` directory inside steam flatpak'
+    echo '[-] enabling rpm fusion repositories [-]'
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
+    echo '[-] installing steam essential packages [-]'
+    sudo dnf install -y steam rocm-smi mangohud gamescope
+    echo 'remember to add `mangohud %command%` to steam launch options'
   fi
 
-  echo '[-] configuring gnome workspace shortcuts [-]'
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['<Super>2']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-3 "['<Super>3']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-4 "['<Super>4']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-5 "['<Super>5']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-1 "['<Super><Shift>1']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-2 "['<Super><Shift>2']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-3 "['<Super><Shift>3']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-4 "['<Super><Shift>4']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-5 "['<Super><Shift>5']"
-
-  if [ ! -f '/etc/apt/sources.list.d/mozilla.list' ]; then
-    echo '[-] installing latest firefox [-]'
-    sudo apt-get purge --autoremove -y firefox-esr
-    sudo apt-get autoremove -y
-    sudo install -d -m 0755 /etc/apt/keyrings
-    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
-    gpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk '/pub/{getline; gsub(/^ +| +$/,""); if($0 == "35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3") print "\nThe key fingerprint matches ("$0").\n"; else print "\nVerification failed: the fingerprint ("$0") does not match the expected one.\n"}'
-    echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
-    echo '
-    Package: *
-    Pin: origin packages.mozilla.org
-    Pin-Priority: 1000
-    ' | sudo tee /etc/apt/preferences.d/mozilla
-    sudo apt-get update -y && sudo apt-get install -y firefox
+  target_dir=$XDG_DATA_HOME/elementary-xfce
+  if [ ! -d "$target_dir" ] ; then
+    echo '[-] building elementary icons for xfce [-]'
+    sudo dnf install -y gcc gdk-pixbuf2-devel gtk-update-icon-cache make optipng pkgconf rsvg-pixbuf-loader
+    git clone https://github.com/shimmerproject/elementary-xfce $target_dir
+    cd $target_dir
+    ./configure
+    make
+    sudo make install
+    sudo make icon-caches
   fi
-
-  echo '[-] downloading zig executable [-]'
-  curl -s https://ziglang.org/download/index.json \
-    | jq -r 'to_entries | map(select(.key != "master")) | max_by(.key | split(".") | map(tonumber)) | .value["x86_64-linux"].tarball' \
-    | xargs wget
-  tar -xf zig-x86_64-linux-*.tar.xz
-  sudo mv zig-x86_64-linux-*/zig /usr/bin/zig
-  if [ -d '/usr/lib/zig' ] ; then
-    sudo rm -rf /usr/lib/zig
-  fi
-  sudo mkdir -p /usr/lib/zig
-  sudo mv zig-x86_64-linux*/lib/* /usr/lib/zig/
-  rm -rf zig-x86_64-linux-*
 
   target_dir=$XDG_DATA_HOME/fonts
   if [ ! -d "$target_dir" ] ; then
@@ -122,15 +86,25 @@ else
     fc-cache -f -v
   fi
 
+  target_dir=$XDG_DATA_HOME/ctags
+  if [ ! -d "$target_dir" ] ; then
+    echo '[-] building universal-ctags [-]'
+    sudo dnf install -y autoconf automake pkg-config gcc make
+    git clone https://github.com/universal-ctags/ctags.git $target_dir
+    cd $target_dir
+    ./autogen.sh
+    ./configure
+    make
+    sudo make install
+  fi
+
   target_dir=$XDG_DATA_HOME/ibus-bamboo
   if [ ! -d "$target_dir" ] ; then
     echo '[-] building ibus-bamboo [-]'
-    sudo apt-get install -y ibus make golang libx11-dev libxtst-dev libgtk-3-dev
+    sudo dnf install -y ibus make go libX11-devel libXtst-devel gtk3-devel
     git clone https://github.com/BambooEngine/ibus-bamboo.git $target_dir
     cd $target_dir
     sudo make install PREFIX=/usr
-    env DCONF_PROFILE=ibus dconf write /desktop/ibus/general/preload-engines "['BambooUs', 'Bamboo']" && \
-      gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('ibus', 'Bamboo')]"
   fi
 fi
 
