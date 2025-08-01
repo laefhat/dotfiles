@@ -41,7 +41,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   echo '[-] installing essential packages [-]'
   brew update
   brew install curl wget git coreutils watch ncdu cmake ninja tree
-  brew install alacritty zig parallel tmux fzf ripgrep jq font-hack
+  brew install alacritty zig parallel tmux ripgrep jq font-hack
 else
   echo '[-] checking secure boot state [-]'
   if [[ "$(mokutil --sb-state)" != *"SecureBoot enabled"* ]]; then
@@ -52,7 +52,7 @@ else
   echo '[-] installing essential packages [-]'
   sudo dnf upgrade -y
   sudo dnf install -y curl wget zip zsh git coreutils gcc clang cmake make ninja-build ncdu
-  sudo dnf install -y alacritty zig parallel watch tree vim tmux fzf ripgrep jq xclip redshift
+  sudo dnf install -y alacritty zig parallel watch tree vim tmux ripgrep jq xclip redshift
 
   if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
     echo '[-] enabling rpm fusion repositories [-]'
