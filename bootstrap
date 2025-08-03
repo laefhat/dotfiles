@@ -41,40 +41,25 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   echo '[-] installing essential packages [-]'
   brew update
   brew install curl wget git coreutils watch ncdu cmake ninja tree
-  brew install alacritty zig parallel tmux ripgrep jq font-hack
+  brew install alacritty zig parallel tmux ripgrep jq tldr font-hack
 else
-  echo '[-] checking secure boot state [-]'
-  if [[ "$(mokutil --sb-state)" != *"SecureBoot enabled"* ]]; then
-    echo "could not determine the secure boot state."
-    exit 1
-  fi
-
   echo '[-] installing essential packages [-]'
-  sudo dnf upgrade -y
-  sudo dnf install -y curl wget zip zsh git coreutils gcc clang cmake make ninja-build ncdu
-  sudo dnf install -y alacritty zig parallel watch tree vim tmux ripgrep jq xclip redshift
+  sudo apt-get update && sudo apt-get upgrade -y
+  sudo apt-get install -y curl wget zip zsh git coreutils gcc clang cmake make ninja-build
+  sudo apt-get install -y alacritty parallel watch tree vim tmux ripgrep jq tldr ncdu
 
-  if lspci | grep -E "VGA|3D" | grep -iq "AMD"; then
-    echo '[-] enabling rpm fusion repositories [-]'
-    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-    ln -sfn $(pwd)/MangoHud $XDG_CONFIG_HOME/MangoHud
-    echo '[-] installing steam essential packages [-]'
-    sudo dnf install -y steam rocm-smi mangohud gamescope
-    echo 'remember to add `mangohud %command%` to steam launch options'
+  echo '[-] downloading zig executable [-]'
+  curl -s https://ziglang.org/download/index.json \
+    | jq -r 'to_entries | map(select(.key != "master")) | max_by(.key | split(".") | map(tonumber)) | .value["x86_64-linux"].tarball' \
+    | xargs wget
+  tar -xf zig-x86_64-linux-*.tar.xz
+  sudo mv zig-x86_64-linux-*/zig /usr/bin/zig
+  if [ -d '/usr/lib/zig' ] ; then
+    sudo rm -rf /usr/lib/zig
   fi
-
-  target_dir=$XDG_DATA_HOME/elementary-xfce
-  if [ ! -d "$target_dir" ] ; then
-    echo '[-] building elementary icons for xfce [-]'
-    sudo dnf install -y gcc gdk-pixbuf2-devel gtk-update-icon-cache make optipng pkgconf rsvg-pixbuf-loader
-    git clone https://github.com/shimmerproject/elementary-xfce $target_dir
-    cd $target_dir
-    ./configure
-    make
-    sudo make install
-    sudo make icon-caches
-  fi
+  sudo mkdir -p /usr/lib/zig
+  sudo mv zig-x86_64-linux*/lib/* /usr/lib/zig/
+  rm -rf zig-x86_64-linux-*
 
   target_dir=$XDG_DATA_HOME/fonts
   if [ ! -d "$target_dir" ] ; then
@@ -84,15 +69,6 @@ else
     unzip Hack-v3.003-ttf.zip -d $target_dir
     rm -f Hack-v3.003-ttf.zip
     fc-cache -f -v
-  fi
-
-  target_dir=$XDG_DATA_HOME/ibus-bamboo
-  if [ ! -d "$target_dir" ] ; then
-    echo '[-] building ibus-bamboo [-]'
-    sudo dnf install -y ibus make go libX11-devel libXtst-devel gtk3-devel
-    git clone https://github.com/BambooEngine/ibus-bamboo.git $target_dir
-    cd $target_dir
-    sudo make install PREFIX=/usr
   fi
 fi
 

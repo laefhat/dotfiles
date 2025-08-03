@@ -24,17 +24,17 @@ save_to_clipboard = true
 
 [[keyboard.bindings]]
 key = "Left"
-mods = "Control"
+mods = "Alt"
 chars = "\u001b[1;5D"
 
 [[keyboard.bindings]]
 key = "Right"
-mods = "Control"
+mods = "Alt"
 chars = "\u001b[1;5C"
 
 [[keyboard.bindings]]
 key = "Back"
-mods = "Control"
+mods = "Alt"
 chars = "\u0017"
 
 [cursor]

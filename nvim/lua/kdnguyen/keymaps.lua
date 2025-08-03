@@ -1,6 +1,8 @@
 vim.keymap.set("c", "<C-a>", "<Home>")
 vim.keymap.set("c", "<C-e>", "<End>")
-vim.keymap.set("c", "<C-BS>", "<C-w>")
+vim.keymap.set("c", "<M-BS>", "<C-w>")
+vim.keymap.set("c", "<M-Left>", "<C-Left>")
+vim.keymap.set("c", "<M-Right>", "<C-Right>")
 
 if vim.fn.executable("rg") > 0 then
     vim.opt.grepprg = "rg --vimgrep --smart-case --no-heading --column"

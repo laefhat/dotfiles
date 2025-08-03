@@ -26,11 +26,13 @@ set history=10000
 set lcs=tab:>\ ,trail:-,nbsp:+
 set list
 let &showbreak='+++ '
-autocmd QuickFixCmdPost [^l]* cwindow | setl cursorline
+autocmd QuickFixCmdPost [^l]* cwindow
 nnoremap <silent> <C-l> :nohlsearch<CR>
+cnoremap <M-Left> <C-Left>
+cnoremap <M-Right> <C-Right>
+cnoremap <M-BS> <C-w>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-cnoremap <C-BS> <C-w>
 nnoremap <Space>gg :vimgrep //f **<S-Left><S-Left><Right>
 vnoremap <Space>gg "0y:vimgrep /<C-r>=escape(@0,'/\')<CR>/f **<S-Left><Left><Left><Left>
 nnoremap <Space>gw :vimgrep /<C-r><C-w>/f **
