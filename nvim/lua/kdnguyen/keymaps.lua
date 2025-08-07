@@ -1,35 +1,42 @@
-vim.keymap.set("c", "<C-a>", "<Home>")
-vim.keymap.set("c", "<C-e>", "<End>")
-vim.keymap.set("c", "<M-BS>", "<C-w>")
-vim.keymap.set("c", "<M-Left>", "<C-Left>")
-vim.keymap.set("c", "<M-Right>", "<C-Right>")
+-- unify command mode keys with shell
+vim.keymap.set("c", "<c-a>", "<home>")
+vim.keymap.set("c", "<c-e>", "<end>")
+vim.keymap.set("c", "<m-bs>", "<c-w>")
+vim.keymap.set("c", "<m-left>", "<c-left>")
+vim.keymap.set("c", "<m-right>", "<c-right>")
 
+-- extend vim grep abilities with ripgrep, result can be accessible through qf list
 if vim.fn.executable("rg") > 0 then
     vim.opt.grepprg = "rg --vimgrep --smart-case --no-heading --column"
     vim.opt.grepformat:prepend("%f:%l:%c:%m")
-    vim.keymap.set("n", "<Space>gg", [[:silent grep! --fixed-strings ''<Left>]])
-    vim.keymap.set("v", "<Space>gg", [["0y:silent grep! --case-sensitive --fixed-strings '<C-r>0'<Left>]])
-    vim.keymap.set("n", "<Space>gw", [[:silent grep! --case-sensitive --fixed-strings '<C-r><C-w>'<CR>]])
-    vim.keymap.set("n", "<Space>/", [[:silent grep! --hidden --no-ignore --fixed-strings ''<Left>]])
+    vim.keymap.set("n", "<space>gg", [[:silent grep! --fixed-strings ''<left>]])
+    vim.keymap.set("v", "<space>gg", [["0y:silent grep! --case-sensitive --fixed-strings '<c-r>0'<left>]])
+    vim.keymap.set("n", "<space>gw", [[:silent grep! --case-sensitive --fixed-strings '<c-r><c-w>'<cr>]])
+    vim.keymap.set("n", "<space>/", [[:silent grep! --hidden --no-ignore --fixed-strings ''<left>]])
 end
 
-vim.keymap.set("v", "//", [["0y/\V<C-r>=escape(@0,'/\')<CR><CR>]])
-vim.keymap.set("n", "<Space>e", ":e %:h<C-z>")
-vim.keymap.set("n", "<Space>b", ":b <C-z>")
+-- some proper ways to browse/search stuff
+vim.keymap.set("v", "//", [["0y/\V<c-r>=escape(@0,'/\')<cr><cr>]])
+vim.keymap.set("n", "<space>e", ":e %:h<c-z>")
+vim.keymap.set("n", "<space>b", ":b <c-z>")
 
-vim.keymap.set("n", "<Space>r", [[:%s/<C-r><C-w>//gI<Left><Left><Left>]])
-vim.keymap.set("v", "<Space>r", [["0y:%s/<C-r>=escape(@0,'/\')<CR>//gI<Left><Left><Left>]])
+-- replace word/marked text
+vim.keymap.set("n", "<space>r", [[:%s/<c-r><c-w>//gI<left><left><left>]])
+vim.keymap.set("v", "<space>r", [["0y:%s/<c-r>=escape(@0,'/\')<cr>//gI<left><left><left>]])
 
-vim.keymap.set({ "n","v" }, "<Space>y", [["+y]])
-vim.keymap.set({ "n","v" }, "<Space>p", [["+p]])
-vim.keymap.set("n", "<Space>P", [["+P]])
+-- copy to system clipboard, all motions after `<space>y` work the same as normal `y`
+vim.keymap.set({ "n","v" }, "<space>y", [["+y]])
+vim.keymap.set({ "n","v" }, "<space>p", [["+p]])
+vim.keymap.set("n", "<space>P", [["+P]])
 
+-- better keymap to toggle netrw
 vim.keymap.set("n", "-", vim.cmd.Explore)
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "netrw",
-    callback = function(e) vim.keymap.set("n", "<C-c>", vim.cmd.Rexplore, { buffer = 0 }) end
+    callback = function(e) vim.keymap.set("n", "<c-c>", vim.cmd.Rexplore, { buffer = 0 }) end
 })
 
+-- minimal fuzzy files finding using rigrep
 local files_cmd = "rg --files --hidden --follow --glob '!.git' | grep -i "
 vim.api.nvim_create_user_command("Files", function(opts)
     local pattern = opts.args
@@ -46,5 +53,5 @@ vim.api.nvim_create_user_command("Files", function(opts)
 end, { nargs = "*", complete = function(arg_lead, _, _)
         return vim.fn.systemlist(files_cmd .. vim.fn.shellescape(arg_lead))
     end })
-vim.keymap.set("n", "<Space>ff", [[:Files ]])
-vim.keymap.set("n", "<Space>fw", [[:Files <C-r><C-w>]])
+vim.keymap.set("n", "<space>ff", [[:Files ]])
+vim.keymap.set("n", "<space>fw", [[:Files <c-r><c-w>]])

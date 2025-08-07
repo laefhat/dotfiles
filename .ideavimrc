@@ -1,43 +1,41 @@
 " you can find a list of commands here: https://jb.gg/h38q75
 " find more examples here: https://jb.gg/share-ideavimrc
 source ~/.vimrc
-nnoremap <Space>r viw"0y:%s/<C-r>0//gI<Left><Left><Left>
-vnoremap <Space>r "0y:%s/<C-r>0//gI<Left><Left><Left>
-vnoremap // "0y/\V<C-r>0<CR>
-nnoremap <Space>y "+y
-vnoremap <Space>y "+y
-nnoremap <Space>p "+p
-nnoremap <Space>P "+P
-vnoremap <Space>p "+p
+nnoremap <space>r viw"0y:%s/<c-r>0//gI<left><left><left>
+vnoremap <space>r "0y:%s/<c-r>0//gI<left><left><left>
+vnoremap // "0y/\V<c-r>0<cr>
+nnoremap <space>y "+y
+vnoremap <space>y "+y
+nnoremap <space>p "+p
+nnoremap <space>P "+P
+vnoremap <space>p "+p
 set ideastatusicon=gray
 set ideawrite=file
 set visualdelay=50
 set ideajoin
 set ideamarks
-" enable IdeaVim plugins https://jb.gg/ideavim-plugins
+" enable ideavim plugins https://jb.gg/ideavim-plugins
 set highlightedyank
 set commentary
 set surround
-" map IDE Actions to IdeaVim -- https://jb.gg/abva4t
-nmap <Space>ff <Action>(GotoFile)
-nmap <Space>fw viw:action GotoFile<CR>
-nmap <Space>e <Action>(ShowNavBar)
-nmap <Space>b <Action>(RecentFiles)
-nmap <Space>gg <Action>(FindInPath)
-vmap <Space>gg <Action>(FindInPath)
-nmap <Space>gw viw:action FindInPath<CR>
-nmap <Space>/ <Action>(SearchEverywhere)
-nmap gq <Action>(ReformatCode)
-vmap gq <Action>(ReformatCode)
-nmap <C-]> <Action>(GotoDeclaration)
-nmap <C-t> <Action>(Back)
+" map ide actions to ideavim -- https://jb.gg/abva4t
+nmap <space>ff <Action>(GotoFile)
+nmap <space>fw viw:action GotoFile<CR>
+nmap <space>e <Action>(ShowNavBar)
+nmap <space>b <Action>(RecentFiles)
+nmap <space>gg <Action>(FindInPath)
+vmap <space>gg <Action>(FindInPath)
+nmap <space>gw viw:action FindInPath<CR>
+nmap <space>/ <Action>(SearchEverywhere)
+nmap - <Action>(SelectInProjectView)
+nmap gd <Action>(GotoDeclaration)
 nmap gri <Action>(GotoImplementation)
 nmap grr <Action>(FindUsages)
-nmap K <Action>(ShowHoverInfo)
 nmap gra <Action>(GotoAction)
-nmap <Space>xc <Action>(RunClass)
-nmap <Space>xm <Action>(RunMenu)
-nmap - <Action>(SelectInProjectView)
+nmap grn <Action>(RenameElement)
+nmap gq <Action>(ReformatCode)
+vmap gq <Action>(ReformatCode)
 nmap ]d <Action>(GotoNextError)zz
 nmap [d <Action>(GotoPreviousError)zz
-nmap <C-w>o <Action>(HideAllWindows)
+nmap K <Action>(ShowHoverInfo)
+nmap <c-w>o <Action>(HideAllWindows)

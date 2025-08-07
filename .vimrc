@@ -21,22 +21,22 @@ set autoindent
 set incsearch
 set hlsearch
 set wildmenu
-set wildcharm=<C-z>
+set wildcharm=<c-z>
 set history=10000
 set lcs=tab:>\ ,trail:-,nbsp:+
 set list
 let &showbreak='+++ '
 autocmd QuickFixCmdPost [^l]* cwindow
-nnoremap <silent> <C-l> :nohlsearch<CR>
-cnoremap <M-Left> <C-Left>
-cnoremap <M-Right> <C-Right>
-cnoremap <M-BS> <C-w>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-nnoremap <Space>gg :vimgrep //f **<S-Left><S-Left><Right>
-vnoremap <Space>gg "0y:vimgrep /<C-r>=escape(@0,'/\')<CR>/f **<S-Left><Left><Left><Left>
-nnoremap <Space>gw :vimgrep /<C-r><C-w>/f **
-vnoremap // "0y/\V<C-r>=escape(@0,'/\')<CR><CR>
-nnoremap <Space>e :e %:h<C-z>
-nnoremap <Space>r :%s/<C-r><C-w>//gI<Left><Left><Left>
-vnoremap <Space>r "0y:%s/<C-r>=escape(@0,'/\')<CR>//gI<Left><Left><Left>
+nnoremap <silent> <c-l> :nohlsearch<cr>
+cnoremap <m-left> <c-left>
+cnoremap <m-right> <c-right>
+cnoremap <m-bs> <c-w>
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+nnoremap <space>gg :vimgrep //f **<s-left><s-left><right>
+vnoremap <space>gg "0y:vimgrep /<c-r>=escape(@0,'/\')<cr>/f **<s-left><left><left><left>
+nnoremap <space>gw :vimgrep /<c-r><c-w>/f **
+vnoremap // "0y/\V<c-r>=escape(@0,'/\')<cr><cr>
+nnoremap <space>e :e %:h<c-z>
+nnoremap <space>r :%s/<c-r><c-w>//gI<left><left><left>
+vnoremap <space>r "0y:%s/<c-r>=escape(@0,'/\')<cr>//gI<left><left><left>

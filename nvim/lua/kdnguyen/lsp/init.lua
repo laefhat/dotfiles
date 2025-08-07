@@ -1,3 +1,4 @@
+-- consistent behaviours across language servers
 vim.lsp.config("*", {
     on_attach = function(client, bufnr)
         vim.lsp.inlay_hint.enable(true)
@@ -7,17 +8,17 @@ vim.lsp.config("*", {
         -- mappings.
         -- see `:help vim.lsp.*` for documentation on any of the below functions
         -- lsp navigation keymaps, use default wherever possible
-        vim.keymap.set("n", "<Space>xx", function()
-            vim.diagnostic.setqflist { severity = vim.diagnostic.severity.ERROR }
-        end)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition)  -- better than pressing C-]
     end,
     detached = true,
 })
 
+-- server configs, usually just launch cmd, applicable filetypes and root marker
+-- some specific language settings can be applied too
 require("kdnguyen.lsp.clangd")
-require("kdnguyen.lsp.zls")
+require("kdnguyen.lsp.gopls")
 require("kdnguyen.lsp.tsserver")
 require("kdnguyen.lsp.pylsp")
 
 -- can be disabled by `:lua vim.lsp.enable("tsserver", false)` for example
-vim.lsp.enable({ "clangd", "zls", "tsserver", "pylsp" })
+vim.lsp.enable({ "clangd", "gopls", "tsserver", "pylsp" })

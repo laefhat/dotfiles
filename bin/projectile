@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+# list all repos if no pattern is given
 pattern="$1"
 if [[ -z "$pattern" ]]; then
   echo "usage: $0 <pattern>"
@@ -9,17 +10,28 @@ if [[ -z "$pattern" ]]; then
   exit 1
 fi
 
-dir=$(find ~/personal ~/repos -maxdepth 3 -type d -iname "*$pattern*" | head -n 1)
+# switch to the session if pattern matches as-is
+if tmux has-session -t $pattern 2>/dev/null; then
+  tmux switch -t $pattern
+  exit 0
+fi
+
+# otherwise, find the first matched repo
+# - awk -F/ '{print NF, $0}': adds the number of path components (directory depth) as the first column
+# - sort -n: sorts numerically by depth (shallowest first)
+# - cut -d' ' -f2-: removes the depth number, returning only the path
+# - head -n 1: takes the first (shallowest) result
+dir=$(find ~/personal ~/repos -maxdepth 3 -type d -iname "*$pattern*" | awk -F/ '{print NF, $0}' | sort -n | cut -d' ' -f2- | head -n 1)
 if [ -z "${dir}" ]; then
   tmux display-message "no project found matching '$pattern'"
   exit 0
 fi
 
+# create a new tmux session with repo name if not exist
 name=$(basename "$dir")
 if ! tmux has-session -t $name 2>/dev/null; then
   tmux new-session -s $name -d -c $dir
   tmux send-keys -t $name 'nvim .' C-m
 fi
-
-tmux switch -t $name
+tmux switch -t $name  # switch to that session eventually
 # vim: ft=bash
