@@ -2,17 +2,16 @@
 set -e
 
 # list all repos if no pattern is given
-pattern="$1"
+pattern="${1:-}"
 if [[ -z "$pattern" ]]; then
   echo "usage: $0 <pattern>"
-  tree -L 3 -d ~/personal
-  tree -L 3 -d ~/repos
+  tree -L 3 -d ~/personal ~/repos
   exit 1
 fi
 
 # switch to the session if pattern matches as-is
-if tmux has-session -t $pattern 2>/dev/null; then
-  tmux switch -t $pattern
+if tmux has-session -t "$pattern" 2>/dev/null; then
+  tmux switch -t "$pattern"
   exit 0
 fi
 
@@ -25,9 +24,10 @@ fi
 
 # create a new tmux session with repo name if not exist
 name=$(basename "$dir")
-if ! tmux has-session -t $name 2>/dev/null; then
-  tmux new-session -s $name -d -c $dir
+if ! tmux has-session -t "$name" 2>/dev/null; then
+  tmux new-session -ds "$name" -c $dir
   tmux send-keys -t $name 'nvim .' C-m
 fi
+
 tmux switch -t $name  # switch to that session eventually
 # vim: ft=bash

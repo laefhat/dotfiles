@@ -46,7 +46,7 @@ else
   echo '[-] installing essential packages [-]'
   sudo apt-get update && sudo apt-get upgrade -y
   sudo apt-get install -y curl wget zip zsh git coreutils gcc clang cmake make ninja-build ncdu
-  sudo apt-get install -y alacritty parallel watch tree vim tmux go ripgrep jq xclip tldr
+  sudo apt-get install -y alacritty parallel watch tree vim tmux golang ripgrep jq xclip tldr
 
   target_dir=$XDG_DATA_HOME/fonts
   if [ ! -d "$target_dir" ] ; then
@@ -88,5 +88,4 @@ if [ "$current_shell" != '/usr/bin/zsh' ] && [ "$current_shell" != '/bin/zsh' ];
 else
   echo '[-] device ready. [-]'
 fi
-
 # vim: ft=bash

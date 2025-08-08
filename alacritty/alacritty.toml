@@ -1,26 +1,27 @@
 [window]
-opacity = 1
-padding.x = 5
-padding.y = 5
-decorations = "Full"
-decorations_theme_variant = "None"
+padding = { x = 5, y = 6 }
+dynamic_padding = true
+decorations = "Buttonless"
+opacity = 0.85
+blur = true
 startup_mode = "Maximized"
+resize_increments = true
 dynamic_title = true
 option_as_alt = "Both"
 
 [font]
-normal.family = "Hack"
-normal.style = "Regular"
-bold.family = "Hack"
-bold.style = "Bold"
-italic.family = "Hack"
-italic.style = "Italic"
-bold_italic.family = "Hack"
-bold_italic.style = "Bold Italic"
-size = 15
+normal = { family = "Hack", style = "Regular" }
+italic = { family = "Hack", style = "Regular" }
+bold_italic = { family = "Hack", style = "Bold" }
+size = 16
 
 [selection]
 save_to_clipboard = true
+
+[cursor]
+style.shape = "Block"
+style.blinking = "Always"
+blink_interval = 500
 
 [[keyboard.bindings]]
 key = "Left"
@@ -36,12 +37,3 @@ chars = "\u001b[1;5C"
 key = "Back"
 mods = "Alt"
 chars = "\u0017"
-
-[cursor]
-style.shape = "Block"
-style.blinking = "Always"
-blink_interval = 500
-
-[colors.primary]
-background = "#181818"
-foreground = "#ffffff"

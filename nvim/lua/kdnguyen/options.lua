@@ -18,6 +18,9 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftround = true
+-- disables editor background
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 -- save change history to files in undodir
 vim.opt.undofile = true
 -- don't like fold, but it's the default in neovim now
@@ -37,6 +40,3 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 -- enable an experimental interface which is intended to replace the message grid in the tui.
 require("vim._extui").enable({ enable = true, msg = { target = "cmd" } })
--- disables 24-bit rgb color
-vim.opt.termguicolors = false
-vim.cmd.colorscheme("retrobox")
